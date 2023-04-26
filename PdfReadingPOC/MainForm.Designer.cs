@@ -1,6 +1,6 @@
 ﻿namespace PdfReadingPOC
 {
-	partial class Form1
+	partial class MainForm
 	{
 		/// <summary>
 		///  Required designer variable.
@@ -28,21 +28,21 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			button1 = new Button();
+			btnCreate = new Button();
 			textBox1 = new TextBox();
 			textBox2 = new TextBox();
 			textBox3 = new TextBox();
 			SuspendLayout();
 			// 
-			// button1
+			// btnCreate
 			// 
-			button1.Location = new Point(119, 39);
-			button1.Name = "button1";
-			button1.Size = new Size(75, 23);
-			button1.TabIndex = 0;
-			button1.Text = "button1";
-			button1.UseVisualStyleBackColor = true;
-			button1.Click += button1_Click;
+			btnCreate.Location = new Point(119, 39);
+			btnCreate.Name = "btnCreate";
+			btnCreate.Size = new Size(75, 23);
+			btnCreate.TabIndex = 0;
+			btnCreate.Text = "Create";
+			btnCreate.UseVisualStyleBackColor = true;
+			btnCreate.Click += BtnCreate_Click;
 			// 
 			// textBox1
 			// 
@@ -65,7 +65,7 @@
 			textBox3.Size = new Size(226, 23);
 			textBox3.TabIndex = 3;
 			// 
-			// Form1
+			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
@@ -73,16 +73,16 @@
 			Controls.Add(textBox3);
 			Controls.Add(textBox2);
 			Controls.Add(textBox1);
-			Controls.Add(button1);
-			Name = "Form1";
-			Text = "Form1";
+			Controls.Add(btnCreate);
+			Name = "MainForm";
+			Text = "MainForm";
 			ResumeLayout(false);
 			PerformLayout();
 		}
 
 		#endregion
 
-		private Button button1;
+		private Button btnCreate;
 		private TextBox textBox1;
 		private TextBox textBox2;
 		private TextBox textBox3;
