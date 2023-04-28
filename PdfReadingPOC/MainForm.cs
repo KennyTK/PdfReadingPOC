@@ -13,16 +13,39 @@ namespace PdfReadingPOC
 {
 	public partial class MainForm : Form
 	{
+		FileSystemWatcher watcher = new FileSystemWatcher(@"C:\Users\kenny\Desktop\files");
+
 		public MainForm()
 		{
 			InitializeComponent();
 
-			openFileDialog1.InitialDirectory = "@C:\\Users\\kenny\\Desktop";
+			openFileDialog1.InitialDirectory = @"C:\Users\kenny\Desktop";
 			openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 			openFileDialog1.FilterIndex = 2;
 			openFileDialog1.RestoreDirectory = true;
 
 			folderBrowserDialog1.InitialDirectory = openFileDialog1.InitialDirectory;
+
+			watcher.NotifyFilter = NotifyFilters.Attributes
+								 | NotifyFilters.CreationTime
+								 | NotifyFilters.DirectoryName
+								 | NotifyFilters.FileName
+								 | NotifyFilters.LastAccess
+								 | NotifyFilters.LastWrite
+								 | NotifyFilters.Security
+								 | NotifyFilters.Size;
+
+			watcher.Changed += OnChanged;
+			watcher.Created += OnCreated;
+			watcher.Deleted += OnDeleted;
+			watcher.Renamed += OnRenamed;
+			watcher.Error += OnError;
+
+			watcher.Filter = "*.txt";
+			watcher.IncludeSubdirectories = true;
+			watcher.EnableRaisingEvents = true;
+
+			Debug.WriteLine("TESSSTTTTTTTTTTTTTTTTTT");
 		}
 
 		private void BtnCreate_Click(object sender, EventArgs e)
@@ -202,6 +225,49 @@ namespace PdfReadingPOC
 		{
 			dataGridView1.AutoResizeColumns();
 			dataGridView2.AutoResizeColumns();
+		}
+
+		private static void OnChanged(object sender, FileSystemEventArgs e)
+		{
+
+			if (e.ChangeType != WatcherChangeTypes.Changed)
+			{
+				return;
+			}
+		}
+
+		private static void OnCreated(object sender, FileSystemEventArgs e)
+		{
+			string value = $"Created: {e.FullPath}";
+			
+			Debug.WriteLine(value);
+		}
+
+		private static void OnDeleted(object sender, FileSystemEventArgs e)
+		{
+			//Console.WriteLine($"Deleted: {e.FullPath}");
+		}
+			
+		private static void OnRenamed(object sender, RenamedEventArgs e)
+		{
+			//Console.WriteLine($"Renamed:");
+			//Console.WriteLine($"    Old: {e.OldFullPath}");
+			//Console.WriteLine($"    New: {e.FullPath}");
+		}
+
+		private static void OnError(object sender, ErrorEventArgs e) =>
+			PrintException(e.GetException());
+
+		private static void PrintException(Exception? ex)
+		{
+			if (ex != null)
+			{
+				Console.WriteLine($"Message: {ex.Message}");
+				Console.WriteLine("Stacktrace:");
+				Console.WriteLine(ex.StackTrace);
+				Console.WriteLine();
+				PrintException(ex.InnerException);
+			}
 		}
 	}
 }
